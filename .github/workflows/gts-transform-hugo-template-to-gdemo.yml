@@ -1,11 +1,9 @@
 name: Update Hugo Template for GTS
 on: 
-  push:
-    branches:
-      - main  # Set a branch to deploy
-  pull_request:
+  workflow_call:
+  workflow_dispatch:
 jobs:
-  build:
+  reusable_workflow_job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,8 +24,7 @@ jobs:
 
       - name: Remove padding in chapter
         run: |
-          grep -qxF '#chapter {padding: 0 0 4rem 0;}' static/css/theme-mine.css || echo '
-          
+          grep -qxF '#chapter {padding: 0 0 4rem 0;}' static/css/theme-mine.css || echo '   
           #chapter {padding: 0 0 4rem 0;}' >> static/css/theme-mine.css
       
       - name: Remove Menu shortcuts
