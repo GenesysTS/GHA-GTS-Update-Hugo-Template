@@ -18,8 +18,8 @@ jobs:
 
       - name: Remove padding in body
         run: |
+          grep -qxF '#body .padding {padding: 0rem 0rem;}' static/css/theme-mine.css || echo '
           grep -qxF '#body .padding {padding: 1rem 2.5rem;}' static/css/theme-mine.css || echo '
-          
           #body .padding {padding: 1rem 2.5rem;}' >> static/css/theme-mine.css
 
       - name: Remove padding in chapter
