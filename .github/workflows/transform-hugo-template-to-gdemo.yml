@@ -18,9 +18,8 @@ jobs:
 
       - name: Create custom_header.html if not found
         run: |
-          #cat <<EOF > $HOME/.grype.yaml
-          #ls layouts/partials/custom_header.html 2&>/dev/null || cat <<EOF > layouts/partials/custom_header.html
-          cat <<EOF > layouts/partials/custom_header.html
+          ls layouts/partials/custom_header.html 2&>/dev/null || cat <<EOF > layouts/partials/custom_header.html
+          #cat <<EOF > layouts/partials/custom_header.html
           <script defer language="javascript" type="text/javascript"  src="{{ "/js/gts_hugo.js" | urlize | relURL }}"></script>
           <script>
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
