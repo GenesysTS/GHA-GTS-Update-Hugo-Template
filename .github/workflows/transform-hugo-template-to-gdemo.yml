@@ -18,7 +18,6 @@ jobs:
 
       - name: Push layouts/partials/custom_header.html
         run: |
-          ls layouts/partials/custom_header.html 2&>/dev/null || touch layouts/partials/custom_header.html
           cat <<EOF > layouts/partials/custom_header.html
           <script defer language="javascript" type="text/javascript"  src="{{ "/js/gts_hugo.js" | urlize | relURL }}"></script>
           <script>
