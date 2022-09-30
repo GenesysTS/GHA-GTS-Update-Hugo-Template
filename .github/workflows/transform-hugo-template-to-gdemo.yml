@@ -24,9 +24,9 @@ jobs:
 
       - name: Push [static/js/gts_hugo.js]
         run: |
-          ls static/js 2&>/dev/null || mkdir static/js
+          ls static/js/gts_hugo.js || mkdir static/js
           cat <<EOF > static/js/gts_hugo.js
-          function myTestFunction(x) {
+          function myTestFunction() {
             alert("Current datetime: " + new Date());
           }
 
