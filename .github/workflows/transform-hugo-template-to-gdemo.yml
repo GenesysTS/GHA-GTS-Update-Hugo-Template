@@ -8,6 +8,49 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - name: Push [layouts/partials/custom_header.html]
+        run: |
+          cat <<EOF > layouts/partials/custom_header.html
+          <script defer language="javascript" type="text/javascript"  src="{{ "/js/gts_hugo.js" | urlize | relURL }}"></script>
+          <script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+              f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-TZFSQDF');
+          </script>
+          EOF
+
+      - name: Push [static/js/gts_hugo.js]
+        run: |
+          ls static/js/gts_hugo.js || mkdir static/js
+          cat <<EOF > static/js/gts_hugo.js
+          function myTestFunction() {
+            alert("Current datetime: " + new Date());
+          }
+
+          // addEventListener support for IE8
+          function bindEvent(element, eventName, eventHandler) {
+            if (element.addEventListener) {
+              element.addEventListener(eventName, eventHandler, false);
+            } else if (element.attachEvent) {
+              element.attachEvent("on" + eventName, eventHandler);
+            }
+          }
+
+          // Send a message to the parent
+          var sendMessage = function (msg) {
+            // Make sure you are sending a string, and to stringify JSON
+            window.parent.postMessage(msg, "*");
+          };
+
+          bindEvent(window, "load", function (e) {
+            console.log("iframe sending path: " + window.location.pathname);
+            sendMessage(window.location.pathname);
+          });
+          EOF
+
       - name: Make body font color black
         uses: jacobtomlinson/gha-find-replace@2.0.0
         with:
