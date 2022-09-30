@@ -25,8 +25,6 @@ jobs:
 
       - name: Push [static/js/gts_hugo.js]
         run: |
-          #ls static/js/gts_hugo.js || mkdir static/js
-          #ls static/js/ || mkdir static/js/
           mkdir -p static/js
           cat <<EOF > static/js/gts_hugo.js
           function myTestFunction() {
