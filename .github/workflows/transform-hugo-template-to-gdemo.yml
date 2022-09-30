@@ -16,9 +16,9 @@ jobs:
           include: "static/css/theme-mine.css"
           regex: false
 
-      - name: Create custom_header.html if not found
+      - name: Push layouts/partials/custom_header.html
         run: |
-          #ls layouts/partials/custom_header.html 2&>/dev/null || cat <<EOF > layouts/partials/custom_header.html
+          ls layouts/partials/custom_header.html 2&>/dev/null || touch layouts/partials/custom_header.html
           cat <<EOF > layouts/partials/custom_header.html
           <script defer language="javascript" type="text/javascript"  src="{{ "/js/gts_hugo.js" | urlize | relURL }}"></script>
           <script>
@@ -29,6 +29,36 @@ jobs:
               f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer','GTM-TZFSQDF');
           </script>
+          EOF
+
+      - name: Push gts_hugo.js
+        run: |
+          ls static/js 2&>/dev/null || mkdir static/js
+          cat <<EOF > static/js/gts_hugo.js
+          function myFunction(x) {
+            let d = new Date();
+            alert("Current datetime: " + d + "\nYou passed in: " + x);
+          }
+
+          // addEventListener support for IE8
+          function bindEvent(element, eventName, eventHandler) {
+            if (element.addEventListener) {
+              element.addEventListener(eventName, eventHandler, false);
+            } else if (element.attachEvent) {
+              element.attachEvent("on" + eventName, eventHandler);
+            }
+          }
+
+          // Send a message to the parent
+          var sendMessage = function (msg) {
+            // Make sure you are sending a string, and to stringify JSON
+            window.parent.postMessage(msg, "*");
+          };
+
+          bindEvent(window, "load", function (e) {
+            console.log("iframe sending path: " + window.location.pathname);
+            sendMessage(window.location.pathname);
+          });
           EOF
 
       - name: Remove padding in body
