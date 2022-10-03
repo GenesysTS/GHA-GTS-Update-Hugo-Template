@@ -8,10 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Push [layouts/partials/custom_header.html]
+      - name: Push [layouts/partials/custom-header.html]
         run: |
           mkdir -p layouts/partials
-          cat <<EOF > layouts/partials/custom_header.html
+          cat <<EOF > layouts/partials/custom-header.html
           <script defer language="javascript" type="text/javascript"  src="{{ "/js/gts_hugo.js" | urlize | relURL }}"></script>
           <script>
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
