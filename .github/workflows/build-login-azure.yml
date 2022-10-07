@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 jobs:
   reusable_workflow_job:
-    if: github.repository_owner == 'GenesysTS'
+    #if: github.repository_owner == 'GenesysTS'
     runs-on: ubuntu-20.04
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
