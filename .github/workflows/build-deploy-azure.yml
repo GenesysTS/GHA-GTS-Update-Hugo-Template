@@ -13,7 +13,8 @@ jobs:
         with:
           submodules: recursive  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-      - run: git checkout HEAD^
+          ref: main
+#      - run: git checkout HEAD^
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
