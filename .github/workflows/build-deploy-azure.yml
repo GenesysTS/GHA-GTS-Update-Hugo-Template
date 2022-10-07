@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 jobs:
   reusable_workflow_job:
-    ##if: github.repository_owner == 'GenesysTS'
+    if: github.repository_owner == 'GenesysTS'
     runs-on: ubuntu-20.04
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
@@ -13,8 +13,7 @@ jobs:
         with:
           submodules: recursive  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-          ref: main
-#      - run: git checkout HEAD^
+          ref: main     # Force to latest commit on main branch
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
@@ -25,15 +24,14 @@ jobs:
       - name: Build
         run: hugo
 
-#      - name: Login via AZ module
-#        uses: azure/login@v1
-#        with:
-#          creds: ${{secrets.GENESYS_SAMPLES_SP}}
+      - name: Login via AZ module
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.GENESYS_SAMPLES_SP}}
           
-#      - name: Upload Hugo to Azure Blob
-#        uses: azure/CLI@v1
-#        with:
-#          inlineScript: |
-#            az storage blob delete-batch --account-name 'genesyssamples' --source '$web' --pattern 'workshops-gdemo/${{ github.event.repository.name }}/*'
-#            az storage blob upload-batch --account-name 'genesyssamples' --source ./public --destination '$web/workshops-gdemo/${{ github.event.repository.name }}'
-            
+      - name: Upload Hugo to Azure Blob
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob delete-batch --account-name 'genesyssamples' --source '$web' --pattern 'workshops-gdemo/${{ github.event.repository.name }}/*'
+            az storage blob upload-batch --account-name 'genesyssamples' --source ./public --destination '$web/workshops-gdemo/${{ github.event.repository.name }}'
